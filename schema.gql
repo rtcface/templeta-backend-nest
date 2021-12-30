@@ -1,0 +1,34 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type UserRegisterdto {
+  id: ID!
+  name: String!
+  email: String!
+  password: String!
+  createdAt: DateTime!
+  status: String!
+  avatar: String!
+  role: String!
+  createByGoogle: Boolean!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Query {
+  hello: String!
+}
+
+type Mutation {
+  register(input: UserRegisterInput!): UserRegisterdto!
+}
+
+input UserRegisterInput {
+  name: String!
+  email: String!
+  password: String!
+}
