@@ -19,16 +19,39 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type UserTokenDto {
+  token: String!
+  user: UserRegisterdto!
+}
+
 type Query {
   hello: String!
+  getUsers: [UserRegisterdto!]!
 }
 
 type Mutation {
-  register(input: UserRegisterInput!): UserRegisterdto!
+  register(input: UserRegisterInput!): UserTokenDto!
+  login(input: LoginAuthInput!): UserTokenDto!
+  updateUser(input: UserUpdateInput!): UserRegisterdto!
 }
 
 input UserRegisterInput {
   name: String!
   email: String!
   password: String!
+}
+
+input LoginAuthInput {
+  email: String!
+  password: String!
+}
+
+input UserUpdateInput {
+  id: String!
+  name: String!
+  email: String!
+  password: String!
+  avatar: String!
+  status: String!
+  role: String!
 }

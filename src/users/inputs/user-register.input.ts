@@ -16,5 +16,5 @@ export class UserRegisterInput {
     @IsString()
     @IsNotEmpty()
     @Field()
-   readonly password: string;
+    password: string;
 }
