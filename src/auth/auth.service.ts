@@ -19,11 +19,7 @@ export class AuthService {
         if (foundUser) {
             throw new Error(MESSAGES.UNAUTHORIZED_EMAIL_IN_USE);
         }
-
-        // const salt = await bcrypt.genSaltSync(10);
-
-        // const hashedPassword = await bcrypt.hash(password, salt);
-
+        
         const createdUser = await this.userService.register({
             name,
             email,

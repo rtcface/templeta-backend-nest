@@ -26,4 +26,11 @@ export class UsersResolver {
         return await this.usersService.updateUser(inputUpdateUser);
     }
 
+    @UseGuards(GqlAuthGuard)
+    @Mutation( () => UserRegisterdto )
+    async inactivateUser(
+        @Args('id') id: string) {
+        return await this.usersService.inactivateUser(id);
+    }
+
 }

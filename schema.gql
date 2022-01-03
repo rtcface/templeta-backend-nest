@@ -33,6 +33,7 @@ type Mutation {
   register(input: UserRegisterInput!): UserTokenDto!
   login(input: LoginAuthInput!): UserTokenDto!
   updateUser(input: UserUpdateInput!): UserRegisterdto!
+  inactivateUser(id: String!): UserRegisterdto!
 }
 
 input UserRegisterInput {

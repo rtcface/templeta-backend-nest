@@ -21,7 +21,7 @@ export class UsersService {
     }
 
     async getUsers(): Promise<UserRegisterdto[]> {
-        const users = await this.usersModel.find().exec();
+        const users = await this.usersModel.find().where({status:'active'}).exec();
         users.map(user => {
             delete user.password;
             return user;
@@ -29,10 +29,8 @@ export class UsersService {
         return users;
     }
 
-    async findUserByEmail(email: string): Promise<UserRegisterdto> {
-        
-       return  await this.usersModel.findOne({email:email});
-       
+    async findUserByEmail(email: string): Promise<UserRegisterdto> {        
+       return  await this.usersModel.findOne({email:email, status:'active'});       
     }
 
     async updateUser(user: UserUpdateInput): Promise<UserUpdatedto> {
@@ -46,7 +44,9 @@ export class UsersService {
         return await bcrypt.hash(password, salt);
     }
 
-    
+    async inactivateUser(id: string): Promise<UserRegisterdto> {
+        return await this.usersModel.findByIdAndUpdate(id, {status: 'inactive'}, {new: true});
+    }
 
 
 }

@@ -1,9 +1,12 @@
 import { Field, InputType } from "@nestjs/graphql";
-import { IsString, IsNotEmpty } from "class-validator";
+import { IsString, IsNotEmpty, isMongoId } from "class-validator";
 @InputType()
 export class UserUpdateInput {
+    @IsString()
+    @IsNotEmpty()   
     @Field()
     readonly id: string;
+                                                
     @Field()
     @IsString()
     @IsNotEmpty()
