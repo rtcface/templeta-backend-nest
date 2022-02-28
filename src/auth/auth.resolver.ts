@@ -21,8 +21,7 @@ export class AuthResolver {
     ) {
         const createdUser =  this.authService.AuthRegister(inputUser);
         
-        if ((await createdUser).haveError) {
-            console.log((await createdUser));
+        if ((await createdUser).haveError) {           
             return createdUser;
         } else {
         createdUser.then(user => {
