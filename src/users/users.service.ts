@@ -33,6 +33,10 @@ export class UsersService {
        return  await this.usersModel.findOne({email:email, status:'active'});       
     }
 
+    async findUserByEmailGeneral(email: string): Promise<UserRegisterdto> {        
+        return  await this.usersModel.findOne({email:email});       
+     }
+
     async updateUser(user: UserUpdateInput): Promise<UserUpdatedto> {
         const {password} = user;
         user.password = await this.hashePassword(password);

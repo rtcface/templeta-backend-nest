@@ -5,9 +5,6 @@ import { UserRegisterInput } from 'src/users/inputs';
 import { AuthService } from './auth.service';
 import { UserTokenDto } from '../users/dto/user-token.dto';
 import { LoginAuthInput } from './inputs';
-import { MESSAGES } from './auth.constants';
-import { BadRequestException } from '@nestjs/common';
-import * as bcrypt from 'bcrypt';
 
 @Resolver()
 export class AuthResolver {
@@ -22,12 +19,18 @@ export class AuthResolver {
     async register(
         @Args('input') inputUser: UserRegisterInput,
     ) {
-        const createdUser = this.authService.AuthRegister(inputUser);
+        const createdUser =  this.authService.AuthRegister(inputUser);
+        
+        if ((await createdUser).haveError) {
+            console.log((await createdUser));
+            return createdUser;
+        } else {
         createdUser.then(user => {
             delete user.user.password;
             return user;
         });
         return createdUser;
+    }
     }
 
     @Mutation(() => UserTokenDto)

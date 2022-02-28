@@ -6,6 +6,7 @@ import * as bcrypt from 'bcrypt';
 import { MESSAGES } from './auth.constants';
 import { UserTokenDto } from '../users/dto/user-token.dto';
 import { LoginAuthInput } from './inputs';
+import { UserRegisterdto } from '../users/dto/user-register.dto';
 
 @Injectable()
 export class AuthService {
@@ -14,10 +15,26 @@ export class AuthService {
         private readonly jwtService: JwtService,) {}
 
     async AuthRegister(inputUser: UserRegisterInput): Promise<UserTokenDto> {
+        const ustmp:UserRegisterdto={
+            id: '',
+            name: '',
+            email: '',
+            password: '',
+            createdAt: undefined,
+            status: '',
+            avatar: '',
+            role: '',
+            createByGoogle: false
+        };
         const {name , email, password} = inputUser;
-        const foundUser = await this.userService.findUserByEmail(email);
+        const foundUser = await this.userService.findUserByEmailGeneral(email);
         if (foundUser) {
-            throw new Error(MESSAGES.UNAUTHORIZED_EMAIL_IN_USE);
+            return {
+                haveError: true,
+                Err: `${MESSAGES.UNAUTHORIZED_EMAIL_IN_USE}`,
+                user: foundUser,
+                token: ""
+            }        
         }
         
         const createdUser = await this.userService.register({
@@ -28,7 +45,12 @@ export class AuthService {
 
        
        
-        return { user: createdUser, token: this.singToken(createdUser.id) };
+        return {
+            haveError: false,
+            Err: "", 
+            user: createdUser,
+            token: this.singToken(createdUser.id)
+         };
     }
 
     async validateUser(email: string, password: string): Promise<any> {
@@ -56,7 +78,12 @@ export class AuthService {
             throw new BadRequestException(`${MESSAGES.UNAUTHORIZED_INVALID_PASSWORD} `);
         }
         user.password = "";
-        return { user, token: this.singToken(user.id) };
+        return {
+            haveError: false,
+            Err: "", 
+            user,
+            token: this.singToken(user.id)
+         };
     }
 
     private async hashePassword(password:string): Promise<string> {

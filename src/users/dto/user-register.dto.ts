@@ -11,7 +11,7 @@ export class UserRegisterdto {
     @Field()
     password: string;
     @Field()
-    readonly createdAt: Date;
+    readonly createdAt!: Date;
     @Field()
     readonly status: string;
     @Field()
