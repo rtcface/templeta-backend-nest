@@ -1,4 +1,3 @@
-export const JWT_SECRET_TOKEN: string = 'secret20211055123132123333332';
 
 export const MESSAGES = {
   UNAUTHORIZED_EMAIL_IN_USE: 'The email already exists',
